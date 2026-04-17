@@ -14,6 +14,15 @@
         p { color: #666; }
         .badge { background: #e0e7ff; color: #4338ca; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
     </style>
+   <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -41,18 +50,14 @@
               v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
           })(document, 'script');
      </script>
-    <script>
-      // Este código vigila si aparecen mensajes nuevos en el chat
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.addedNodes.length) {
-            // Si detecta algo nuevo, le pide a MathJax que lo convierta a fórmula
-            MathJax.typesetPromise();
-          }
-        });
+     <script>
+      // Este código detecta cuando el bot escribe un mensaje y lo convierte a matemáticas
+      const observer = new MutationObserver(() => {
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          MathJax.typesetPromise();
+        }
       });
     
-      // Empezamos a vigilar toda la página
       observer.observe(document.body, {
         childList: true,
         subtree: true
