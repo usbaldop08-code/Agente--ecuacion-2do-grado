@@ -26,20 +26,37 @@
         <p><strong>Usa el chat de la derecha para empezar →</strong></p>
     </div>
      <script type="text/javascript">
-  (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '69e03492cbab4fe0874b3c2c' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          voice: {
-            url: "https://runtime-api.voiceflow.com"
+          (function(d, t) {
+              var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+              v.onload = function() {
+                window.voiceflow.chat.load({
+                  verify: { projectID: '69e03492cbab4fe0874b3c2c' },
+                  url: 'https://general-runtime.voiceflow.com',
+                  versionID: 'production',
+                  voice: {
+                    url: "https://runtime-api.voiceflow.com"
+                  }
+                });
+              }
+              v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+          })(document, 'script');
+     </script>
+    <script>
+      // Este código vigila si aparecen mensajes nuevos en el chat
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.addedNodes.length) {
+            // Si detecta algo nuevo, le pide a MathJax que lo convierta a fórmula
+            MathJax.typesetPromise();
           }
         });
-      }
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-  })(document, 'script');
-</script>
-    </body>
+      });
+    
+      // Empezamos a vigilar toda la página
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    </script>
+</body>
 </html>
